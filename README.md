@@ -1,7 +1,7 @@
 # WebSocket
 Note that you can also discover this tutorial in video on Youtube :
 
-![](https://github.com/XBean1024/WebSocket/blob/master/video/LearntouseWebSocketsonAndroidwithOkHttp.mp4)
+![](https://raw.githubusercontent.com/XBean1024/WebSocket/master/video/LearntouseWebSocketsonAndroidwithOkHttp.mp4)
 First step is to add the OkHttp dependency in your Gradle build file :
 
 	compile 'com.squareup.okhttp3:okhttp:3.6.0'
