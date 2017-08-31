@@ -168,3 +168,5 @@ The code will have the following form :
 Finally, you have just to run your application and enjoy the result :
 
 ![](https://github.com/XBean1024/WebSocket/blob/master/video/1.png)
+
+ To discover more tutorials on Android Development, don’t hesitate to visit the SSaurel’s blog : https://www.ssaurel.com/blog/
