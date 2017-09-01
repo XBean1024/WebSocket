@@ -22,6 +22,8 @@ public class MainActivity extends AppCompatActivity {
     private final class EchoWebsocketListener extends WebSocketListener {
         private static final int NORMAL_CLOSURE_STATUS = 1000;
 
+        /*
+        * 建立链接时触发*/
         @Override
         public void onOpen(final WebSocket webSocket, final Response response) {
             webSocket.send("Hello it's");
@@ -30,6 +32,9 @@ public class MainActivity extends AppCompatActivity {
             webSocket.close(NORMAL_CLOSURE_STATUS, "good bey");
         }
 
+        /*
+        * 接受到消息时候的回调函数
+        * */
         @Override
         public void onMessage(final WebSocket webSocket, final ByteString bytes) {
             output("recrive msg :" + bytes.hex());

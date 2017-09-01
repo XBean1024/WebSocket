@@ -1,4 +1,9 @@
 # WebSocket
+
+Websocket服务器
+
+    ws://echo.websocket.org //返回你发送的数据
+
 Note that you can also discover this tutorial in video on Youtube :
 
 https://raw.githubusercontent.com/XBean1024/WebSocket/master/video/LearntouseWebSocketsonAndroidwithOkHttp.mp4
