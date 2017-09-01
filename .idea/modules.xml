@@ -3,6 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/WebSocket.iml" filepath="$PROJECT_DIR$/WebSocket.iml" />
+      <module fileurl="file://$PROJECT_DIR$/WebView透明/WebView透明.iml" filepath="$PROJECT_DIR$/WebView透明/WebView透明.iml" />
+      <module fileurl="file://$PROJECT_DIR$/android-websockets/android-websockets.iml" filepath="$PROJECT_DIR$/android-websockets/android-websockets.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
