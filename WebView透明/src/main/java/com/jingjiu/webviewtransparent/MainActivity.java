@@ -8,7 +8,6 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -38,16 +37,49 @@ public class MainActivity extends Activity {
             "<head>\n" +
             "    <meta charset=\"UTF-8\">\n" +
             "    <script>\n" +
-            "        function myFunction()\n" +
-            "        {\n" +
-            "            android.showToast(\"哈哈啊哈 \");\n" +
-            "            alert(\"My First JavaScript Function\");\n" +
+            "\n" +
+            "        //获取控件左绝对位置\n" +
+            "\n" +
+            "        function getAbsoluteLeft(objectId) {\n" +
+            "            o = document.getElementById(objectId)\n" +
+            "            oLeft = o.offsetLeft\n" +
+            "            while(o.offsetParent!=null) {\n" +
+            "                oParent = o.offsetParent\n" +
+            "                oLeft += oParent.offsetLeft\n" +
+            "                o = oParent\n" +
+            "            }\n" +
+            "            return oLeft\n" +
+            "        }\n" +
+            "        //获取控件上绝对位置\n" +
+            "        function getAbsoluteTop(objectId) {\n" +
+            "            o = document.getElementById(objectId);\n" +
+            "            oTop = o.offsetTop;\n" +
+            "            while(o.offsetParent!=null)\n" +
+            "            {\n" +
+            "                oParent = o.offsetParent\n" +
+            "                oTop += oParent.offsetTop  // Add parent top position\n" +
+            "                o = oParent\n" +
+            "            }\n" +
+            "            return oTop\n" +
+            "        }\n" +
+            "\n" +
+            "        //获取控件宽度\n" +
+            "\n" +
+            "        function getElementWidth(objectId) {\n" +
+            "            x = document.getElementById(objectId);\n" +
+            "            return x.offsetWidth;\n" +
             "        }\n" +
             "    </script>\n" +
             "</head>\n" +
             "\n" +
             "<body>\n" +
-            "<button type=\"button\" onclick=\"myFunction()\">点击这里</button>\n" +
+            "\n" +
+            "<h1 style=\"color:white;\">My Web Page</h1>\n" +
+            "\n" +
+            "<p id=\"demo\" style=\"color:white;\">A Paragraph.</p>\n" +
+            "\n" +
+            "<button type=\"button\" id=\"button\" onclick=\"getElementWidth(button)\">点击这里</button>\n" +
+            "\n" +
             "</body>\n" +
             "</html>";
     @Override
@@ -71,48 +103,14 @@ public class MainActivity extends Activity {
         mWebView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                    case MotionEvent.ACTION_UP:
-                        if (v.hasFocus()) {
-                            Log.i(TAG, "onTouch: " +v.getWidth());
-                        }
-                        break;
+                if (!v.hasFocus()) {
+                    v.requestFocus();
+                    Log.i(TAG, "onTouch: aaaaaaaaaa" +v.getAlpha());
                 }
                 return false;
             }
         });
-        mWebView.setOnHierarchyChangeListener(new ViewGroup.OnHierarchyChangeListener() {
-            @Override
-            public void onChildViewAdded(final View parent, final View child) {
-                Log.i(TAG, "child: "+child.getWidth());
-                Log.i(TAG, "parent: "+parent.getWidth());
-            }
 
-            @Override
-            public void onChildViewRemoved(final View parent, final View child) {
-
-            }
-        });
-        mWebView.setFindListener(new WebView.FindListener() {
-            @Override
-            public void onFindResultReceived(final int i, final int i1, final boolean b) {
-                Log.i(TAG, "onFindResultReceived: "+i);
-            }
-        });
-        mWebView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(final View v, final boolean hasFocus) {
-                Log.i(TAG, "onFocusChange: "+v.getWidth());
-            }
-        });
-        mWebView.setOnGenericMotionListener(new View.OnGenericMotionListener() {
-            @Override
-            public boolean onGenericMotion(final View v, final MotionEvent event) {
-                Log.i(TAG, "onGenericMotion: "+v.getWidth());
-                return false;
-            }
-        });
 
         mWebView.getBackground().setAlpha(180); // 设置填充透明度 范围：0-255
 
