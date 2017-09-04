@@ -17,30 +17,7 @@ public class MainActivity extends Activity {
 
     private static final String TAG = "MainActivity";
     WebSocketClient client;
-    String html = "<!DOCTYPE html>\n" +
-            "<html lang=\"en\">\n" +
-            "<head>\n" +
-            "    <meta charset=\"UTF-8\">\n" +
-            "    <title>Title</title>\n" +
-            "</head>\n" +
-            "<body>\n" +
-            "<form name=\"atool_alipay_img_form\" style=\"padding-bottom: 0;border:none;\" method=\"post\"\n" +
-            "      action=\"https://shenghuo.alipay.com/send/payment/fill.htm\" target=\"_blank\" accept-charset=\"GBK\"\n" +
-            "      onsubmit=\"document.charset='gbk';\">\n" +
-            "    <input type=\"hidden\" value=\"18221869775\" name=\"optEmail\">\n" +
-            "    <input type=\"hidden\" name=\"title\" placeholder=\"付款说明\" value=\"\">\n" +
-            "    <input type=\"image\" value=\"支付宝收款\" src=\"http://www.atool.org/res/alipay_1.png\" name=\"pay\">\n" +
-            "</form>\n" +
-            "<form name=\"atool_alipay_text_form\" style=\"padding-bottom: 0;border:none;\" method=\"post\"\n" +
-            "      action=\"https://shenghuo.alipay.com/send/payment/fill.htm\" target=\"_blank\" accept-charset=\"GBK\"\n" +
-            "      onsubmit=\"document.charset='gbk';\">\n" +
-            "    <input type=\"hidden\" value=\"18221869775\" name=\"optEmail\"/>\n" +
-            "    <input type=\"hidden\" value=\"1000\"name=\"payAmount\"/>\n" +
-            "    <input type=\"hidden\" name=\"title\" placeholder=\"付款说明\" value=\"\"/>\n" +
-            "    <a href=\"javascript:javascript:document.atool_alipay_text_form.submit();\" title=\"支付宝收款\" value=\"支付宝收款\" name=\"pay\">向我捐款</a>\n" +
-            "</form>\n" +
-            "</body>\n" +
-            "</html>";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,6 +69,6 @@ public class MainActivity extends Activity {
     }
 
     public void connect(View view) {
-        client.send(html);
+        client.send("request");
     }
 }

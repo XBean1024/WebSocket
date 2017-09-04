@@ -2,7 +2,6 @@ package com.jingjiu.webviewtransparent;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.webkit.WebView;
 
@@ -30,16 +29,9 @@ public class MyWebView extends WebView {
 	}
 
     @Override
-    public boolean onTouchEvent(MotionEvent ev) {
-		Log.i(TAG, "onTouchEvent: ");
-            return super.onTouchEvent(ev);
-//		super.onTouchEvent(ev);
-//		if (ev.getX()<getWidth()/2-getWidth()/3||ev.getX()>getWidth()/2+getWidth()/3) {
-//			Log.i(TAG, "onTouchEvent: ");
-//			return true;
-//		}else {
-//			return false;
-//		}
+    public boolean onTouchEvent(final MotionEvent ev) {
+		return super.onTouchEvent(ev);
+
 
     }
 

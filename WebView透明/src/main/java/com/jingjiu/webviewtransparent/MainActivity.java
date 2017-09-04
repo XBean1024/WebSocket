@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -37,49 +38,16 @@ public class MainActivity extends Activity {
             "<head>\n" +
             "    <meta charset=\"UTF-8\">\n" +
             "    <script>\n" +
-            "\n" +
-            "        //获取控件左绝对位置\n" +
-            "\n" +
-            "        function getAbsoluteLeft(objectId) {\n" +
-            "            o = document.getElementById(objectId)\n" +
-            "            oLeft = o.offsetLeft\n" +
-            "            while(o.offsetParent!=null) {\n" +
-            "                oParent = o.offsetParent\n" +
-            "                oLeft += oParent.offsetLeft\n" +
-            "                o = oParent\n" +
-            "            }\n" +
-            "            return oLeft\n" +
-            "        }\n" +
-            "        //获取控件上绝对位置\n" +
-            "        function getAbsoluteTop(objectId) {\n" +
-            "            o = document.getElementById(objectId);\n" +
-            "            oTop = o.offsetTop;\n" +
-            "            while(o.offsetParent!=null)\n" +
-            "            {\n" +
-            "                oParent = o.offsetParent\n" +
-            "                oTop += oParent.offsetTop  // Add parent top position\n" +
-            "                o = oParent\n" +
-            "            }\n" +
-            "            return oTop\n" +
-            "        }\n" +
-            "\n" +
-            "        //获取控件宽度\n" +
-            "\n" +
-            "        function getElementWidth(objectId) {\n" +
-            "            x = document.getElementById(objectId);\n" +
-            "            return x.offsetWidth;\n" +
+            "        function myFunction()\n" +
+            "        {\n" +
+            "            android.showToast(\"哈哈啊哈 \");\n" +
+            "            alert(\"My First JavaScript Function\");\n" +
             "        }\n" +
             "    </script>\n" +
             "</head>\n" +
             "\n" +
             "<body>\n" +
-            "\n" +
-            "<h1 style=\"color:white;\">My Web Page</h1>\n" +
-            "\n" +
-            "<p id=\"demo\" style=\"color:white;\">A Paragraph.</p>\n" +
-            "\n" +
-            "<button type=\"button\" id=\"button\" onclick=\"getElementWidth(button)\">点击这里</button>\n" +
-            "\n" +
+            "<button type=\"button\" onclick=\"myFunction()\">点击这里</button>\n" +
             "</body>\n" +
             "</html>";
     @Override
@@ -103,10 +71,14 @@ public class MainActivity extends Activity {
         mWebView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                if (!v.hasFocus()) {
-                    v.requestFocus();
-                    Log.i(TAG, "onTouch: aaaaaaaaaa" +v.getAlpha());
-                }
+                mWebView.evaluateJavascript("document.elementFromPoint("+event.getX()+","+ event.getY()+").onclick.toString()", new ValueCallback<String>() {
+                    @Override
+                    public void onReceiveValue(final String value) {
+                        if (value.contains("function")) {
+                            Log.i(TAG, "onReceiveValue: ");
+                        }
+                    }
+                });
                 return false;
             }
         });
