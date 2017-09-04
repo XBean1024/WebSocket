@@ -15,6 +15,7 @@ import android.webkit.WebViewClient;
 import android.widget.MediaController;
 import android.widget.VideoView;
 
+import com.facebook.stetho.Stetho;
 import com.jingjiu.webviewtransparent.websocket.WebSocketClient;
 
 import org.apache.http.message.BasicNameValuePair;
@@ -54,6 +55,7 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Stetho.initializeWithDefaults(this);
         start();
         mVideoView = (VideoView) findViewById(R.id.video_view);
 
@@ -83,7 +85,7 @@ public class MainActivity extends Activity {
             }
         });
 
-
+        WebView.setWebContentsDebuggingEnabled(true);
         mWebView.getBackground().setAlpha(180); // 设置填充透明度 范围：0-255
 
 //        mWebView.setVisibility(View.GONE); // 加载完之后进行设置显示，以免加载时初始化效果不好看

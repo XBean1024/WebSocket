@@ -1,7 +1,6 @@
 package com.jingjiu.webviewtransparent;
 
 import android.content.Context;
-import android.os.Handler;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -15,6 +14,9 @@ import android.widget.LinearLayout;
  */
 
 public class MyViewGroup extends LinearLayout {
+
+    MotionEvent mMotionEvent;
+    private boolean stop;
     public MyViewGroup(final Context context) {
         super(context);
     }
@@ -27,8 +29,32 @@ public class MyViewGroup extends LinearLayout {
     @Override
     public boolean dispatchTouchEvent(final MotionEvent ev) {
         final WebView webView = (WebView) getChildAt(0);
-
-
-        return super.dispatchTouchEvent(ev);
+        float x = ev.getX();
+        float y = ev.getY();
+        Log.i(TAG, "onReceiveValue: " + x);
+        Log.i(TAG, "onReceiveValue: " + y);
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder
+                .append("(")
+                .append("document.elementFromPoint(")
+                .append(x)
+                .append(",")
+                .append(y)
+                .append(").click !== null")
+                .append(").toString()");
+        String jsStr =  stringBuilder.toString();
+        webView.evaluateJavascript(jsStr, new ValueCallback<String>() {
+            @Override
+            public void onReceiveValue(final String value) {
+                Log.i(TAG, "onReceiveValue: " + Thread.currentThread().getName());
+                if (value.equals("\"true\"")&&!stop) {
+                    mMotionEvent = ev;
+//                    imitateTouchEvent(mMotionEvent);
+                    stop = true;
+                }
+            }
+        });
+        Log.i(TAG, "onTouchEvent: jsStr = "+jsStr);
+        return false;
     }
 }
