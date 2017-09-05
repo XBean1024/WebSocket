@@ -39,7 +39,7 @@ public class MainActivity extends Activity {
             "    <script>\n" +
             "        function myFunction()\n" +
             "        {\n" +
-            "            android.showToast(\"哈哈啊哈 \");" +
+            "           alert('js响应'); android.showToast(\"哈哈啊哈 \");" +
             "        }\n" +
             "    </script>\n" +
             "</head>\n" +

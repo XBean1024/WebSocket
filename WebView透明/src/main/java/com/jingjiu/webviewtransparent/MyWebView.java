@@ -9,9 +9,10 @@ import android.webkit.WebView;
 
 public class MyWebView extends WebView {
     private static final String TAG = "MyWebView";
-    MotionEvent mMotionEvent;
-    private boolean stop;
-
+    private final String mClick = "mClick";
+    private final String mImitate_web = "web";
+    private final String mImitate_video = "video";
+    private String mTag = mClick;
     public MyWebView(Context context, AttributeSet attrs, int defStyle,
                      boolean privateBrowsing) {
         super(context, attrs, defStyle, privateBrowsing);
@@ -29,37 +30,53 @@ public class MyWebView extends WebView {
         super(context);
     }
 
+    public boolean onTouchEvent1(final MotionEvent ev) {
+        return false;
+    }
 
-    @Override
+//    @Override
     public boolean onTouchEvent(final MotionEvent ev) {
-        super.onTouchEvent(ev);
+
         float x = ev.getX();
         float y = ev.getY();
-        if (stop) {
-            Log.i(TAG, "模拟事件： "+stop);
-            stop = false;
-            return true;
-        } else {
-            Log.i(TAG, "非模拟事件: "+stop);
+        if (mTag.equals(mImitate_video)) {
+            Log.i(TAG, "模拟 video 事件： "+ev.toString() );
+            if (ev.getAction() == MotionEvent.ACTION_UP) {
+                mTag = mClick;
+            }
+
+            return false;
+        }else if (mTag.equals(mImitate_web)) {
+            if (ev.getAction() == MotionEvent.ACTION_UP) {
+                mTag = mClick;
+            }
+            Log.i(TAG, "模拟 web 事件： "+ev.toString() );
+            super.onTouchEvent(ev);
+
+            return false;
+        }else {
             String jsStr3 = "document.elementFromPoint(" + x + "," + y + ").hasAttribute('onclick');";
             evaluateJavascript(jsStr3, new ValueCallback<String>() {
                 @Override
                 public void onReceiveValue(final String value) {
                     Log.i(TAG, "返回值: "+value);
-                    if (value.equals("true")) {
-                        imitateTouchEvent(ev);
+                    if (!value.equals("true")) {
+                        mTag = mImitate_video;
+                    }else {
+                        mTag = mImitate_web;
                     }
-
+                    imitateTouchEvent(ev);
                 }
             });
-            return false;//不处理点击事件
+            return true;
         }
 
     }
 
     private void imitateTouchEvent(final MotionEvent motionEvent) {
-        stop = true;
+        Log.i(TAG, "准备模拟 "+mTag+" 事件: ");
         super.dispatchTouchEvent(motionEvent);
+
     }
 
 //	@Override
