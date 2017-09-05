@@ -22,6 +22,7 @@
                android:layout_height="500dp"/>
            <com.jingjiu.webviewtransparent.MyWebView
                android:id="@+id/web_view"
+               android:clickable="true"
                android:background="@android:color/transparent"
                android:layerType="software"
                android:layout_width="match_parent"

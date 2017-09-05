@@ -6,9 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
-import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -41,14 +39,13 @@ public class MainActivity extends Activity {
             "    <script>\n" +
             "        function myFunction()\n" +
             "        {\n" +
-            "            android.showToast(\"哈哈啊哈 \");\n" +
-            "            alert(\"My First JavaScript Function\");\n" +
+            "            android.showToast(\"哈哈啊哈 \");" +
             "        }\n" +
             "    </script>\n" +
             "</head>\n" +
             "\n" +
             "<body>\n" +
-            "<button type=\"button\" onclick=\"myFunction()\">点击这里</button>\n" +
+            "<div id='btn' style=\"width:100px;height:200px;background:red;\"type=\"button\" onclick=\"myFunction()\">点击这里</div>\n" +
             "</body>\n" +
             "</html>";
     @Override
@@ -70,25 +67,9 @@ public class MainActivity extends Activity {
         mWebView.setBackgroundColor(Color.TRANSPARENT); // 设置背景色
         mWebView.addJavascriptInterface(new JavaScriptinterface(this),
                 "android");
-        mWebView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                mWebView.evaluateJavascript("document.elementFromPoint("+event.getX()+","+ event.getY()+").onclick.toString()", new ValueCallback<String>() {
-                    @Override
-                    public void onReceiveValue(final String value) {
-                        if (value.contains("function")) {
-                            Log.i(TAG, "onReceiveValue: ");
-                        }
-                    }
-                });
-                return false;
-            }
-        });
 
         WebView.setWebContentsDebuggingEnabled(true);
         mWebView.getBackground().setAlpha(180); // 设置填充透明度 范围：0-255
-
-//        mWebView.setVisibility(View.GONE); // 加载完之后进行设置显示，以免加载时初始化效果不好看
     }
     private void start() {
         List<BasicNameValuePair> extraHeaders = Arrays.asList(
@@ -147,7 +128,7 @@ public class MainActivity extends Activity {
     }
 
     public void close(View view) {
-        client.disconnect();
+        mWebView.loadUrl("javascript:change_color()");
     }
 
     public void connect(View view) {

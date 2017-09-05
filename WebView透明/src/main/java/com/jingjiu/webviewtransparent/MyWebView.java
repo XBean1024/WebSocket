@@ -29,40 +29,36 @@ public class MyWebView extends WebView {
         super(context);
     }
 
+
     @Override
     public boolean onTouchEvent(final MotionEvent ev) {
         super.onTouchEvent(ev);
         float x = ev.getX();
         float y = ev.getY();
-        Log.i(TAG, "onReceiveValue: " + x);
-        Log.i(TAG, "onReceiveValue: " + y);
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder
-                .append("(")
-                        .append("document.elementFromPoint(")
-                                .append(x)
-                                .append(",")
-                                .append(y)
-                        .append(").hasAttribute('onclick')")
-                .append(").toString()");
-        String jsStr =  stringBuilder.toString();
-        Log.i(TAG, "onTouchEvent: jsStr = "+jsStr);
-        evaluateJavascript(jsStr, new ValueCallback<String>() {
-            @Override
-            public void onReceiveValue(final String value) {
-                Log.i(TAG, "onReceiveValue: " + value);
-                if (value.equals("\"true\"")&&!stop) {
-                    mMotionEvent = ev;
-                    imitateTouchEvent(mMotionEvent);
-                    stop = true;
+        if (stop) {
+            Log.i(TAG, "模拟事件： "+stop);
+            stop = false;
+            return true;
+        } else {
+            Log.i(TAG, "非模拟事件: "+stop);
+            String jsStr3 = "document.elementFromPoint(" + x + "," + y + ").hasAttribute('onclick');";
+            evaluateJavascript(jsStr3, new ValueCallback<String>() {
+                @Override
+                public void onReceiveValue(final String value) {
+                    Log.i(TAG, "返回值: "+value);
+                    if (value.equals("true")) {
+                        imitateTouchEvent(ev);
+                    }
+
                 }
-            }
-        });
-        return false;//不处理点击事件
+            });
+            return false;//不处理点击事件
+        }
+
     }
 
     private void imitateTouchEvent(final MotionEvent motionEvent) {
-        Log.i(TAG, "imitateTouchEvent: ");
+        stop = true;
         super.dispatchTouchEvent(motionEvent);
     }
 
